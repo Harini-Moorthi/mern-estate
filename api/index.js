@@ -26,7 +26,7 @@ app.listen(3000, ()=>{
 
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
-//middleware
+//middleware  (it is an error middleware) Express calls it automatically when you pass an error using next(err).
 app.use((err,req,res,next) => {
   const statusCode=err.statusCode || 500;
   const message= err.message || 'Internal server error';
