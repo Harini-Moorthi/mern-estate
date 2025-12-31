@@ -23,10 +23,12 @@ export const signin = async (req , res, next)=>{
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if(!validPassword) return next(errorHandler(401,'Wrong credentials!'));
     //to create hash value for valid users to put it in cookie get it to the server
+    //jwt.sign() is used to create a JWT (JSON Web Token).
     const token = jwt.sign({ id :validUser._id}, process.env.JWT_SECRET);
     //to take all except password for security reasons
     const { password: pass, ...rest}= validUser._doc;
     //cookie
+    //name of the cookie: access_token
     res.cookie('access_token',token ,{ httpOnly: true}).status(200).json(rest);
   }
   catch(error){
